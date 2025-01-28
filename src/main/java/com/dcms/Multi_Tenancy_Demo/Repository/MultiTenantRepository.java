@@ -4,6 +4,6 @@ import com.dcms.Multi_Tenancy_Demo.Model.Account;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface AccountRepository extends MongoRepository<Account, Long> {
+public interface MultiTenantRepository extends MongoRepository<Account, Long> {
 
 }
