@@ -34,9 +34,9 @@ public class MultiTenantController {
     public ResponseEntity<Map<String, String>> createDatabase(@RequestHeader("bankName") String bankName){
         try {
             logger.info("Received request to create database for bank: {}", bankName);
-            Map<String, String> response =  new HashMap<>();
             multiTenantService.createNewDatabase(bankName);
-            response.put("message", "Database created with name: " + bankName);
+            Map<String, String> response =  new HashMap<>();
+            response.put("message", "Database created and registered in MasterDB: " + bankName);
             logger.info("Database created successfully: {}", bankName);
             return ResponseEntity.ok(response);
         }catch (IllegalArgumentException e){
@@ -62,18 +62,4 @@ public class MultiTenantController {
         }
     }
 
-    @PostMapping("/account-entry")
-    public ResponseEntity<Map<String, String>> addAccountEntry(@RequestHeader("bankName") String bankName, @RequestBody Account account){
-        try {
-            logger.info("Received request to add account entry for bank: {}", bankName);
-            Map<String, String> response =  new HashMap<>();
-            multiTenantService.saveAccountEntry(bankName, account);
-            response.put("message", "Account created for name "+account.getAccount_holder_name());
-            logger.info("Account created for bank: {} with holder name: {}", bankName, account.getAccount_holder_name());
-            return ResponseEntity.ok(response);
-        }catch (CollectionOrDbNotFoundException e){
-            logger.error("Error adding account entry for bank: {}", bankName, e);
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
-        }
-    }
 }
