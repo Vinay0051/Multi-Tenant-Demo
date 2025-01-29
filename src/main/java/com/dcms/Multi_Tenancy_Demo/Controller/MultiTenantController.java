@@ -50,7 +50,7 @@ public class MultiTenantController {
         try {
             logger.info("Received request to add debit entry for bank: {}", bankName);
             Map<String, String> response =  new HashMap<>();
-            DebitCard debitCard = new DebitCard(request.get("card_network"));
+            DebitCard debitCard = new DebitCard(request.get("card_network"), request.get("cvv"));
             multiTenantService.saveDebitCardEntry(bankName, debitCard);
             response.put("message", "Debit entry created with network: " + debitCard.getCardNetwork());
             logger.info("Debit entry created for bank: {} with network: {}", bankName, debitCard.getCardNetwork());
@@ -61,5 +61,4 @@ public class MultiTenantController {
             throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, e.getMessage());
         }
     }
-
 }

@@ -7,12 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class DebitCard {
-    @Id
-    private String card_id;
 
     private String cvv;
 
-    @JsonProperty("card_network")
     private String card_network;
 
     public DebitCard(String card_network, String cvv) {
@@ -31,13 +28,6 @@ public class DebitCard {
         return card_network;
     }
 
-    public String getCard_id() {
-        return card_id;
-    }
-
-    public void setCard_id(String card_id) {
-        this.card_id = card_id;
-    }
 
     public String getCard_network() {
         return card_network;
