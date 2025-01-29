@@ -1,7 +1,6 @@
 package com.dcms.Multi_Tenancy_Demo.Controller;
 
 import com.dcms.Multi_Tenancy_Demo.Exception.CollectionOrDbNotFoundException;
-import com.dcms.Multi_Tenancy_Demo.Model.Account;
 import com.dcms.Multi_Tenancy_Demo.Model.DebitCard;
 import com.dcms.Multi_Tenancy_Demo.Service.MultiTenantService;
 import org.junit.jupiter.api.BeforeEach;

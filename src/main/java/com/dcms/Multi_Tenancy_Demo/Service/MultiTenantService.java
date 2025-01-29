@@ -1,7 +1,6 @@
 package com.dcms.Multi_Tenancy_Demo.Service;
 
 import com.dcms.Multi_Tenancy_Demo.Exception.CollectionOrDbNotFoundException;
-import com.dcms.Multi_Tenancy_Demo.Model.Account;
 import com.dcms.Multi_Tenancy_Demo.Model.DebitCard;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
@@ -25,7 +24,6 @@ public class MultiTenantService {
         this.mongoTemplate = mongoTemplate;
     }
 
-
     public void createNewDatabase(String bankName){
 
         boolean databaseExists = mongoClient.listDatabaseNames().into(new ArrayList<>()).contains(bankName);
@@ -34,29 +32,13 @@ public class MultiTenantService {
         }
 
         MongoDatabase newDatabase = mongoClient.getDatabase(bankName);
-        newDatabase.createCollection("accountHoldersInformation");
-        newDatabase.createCollection("debitCardInformation");
-    }
-
-
-    public void saveAccountEntry(String bankName, Account account) {
-        boolean databaseExists = mongoClient.listDatabaseNames().into(new ArrayList<>()).contains(bankName);
-        if(databaseExists){
-            MongoDatabase newDatabase = mongoClient.getDatabase(bankName);
-//            newDatabase.getCollection("accountHoldersInformation").insertOne(new Document(account.getAccount_holder_name(), account));
-            Document doc = new Document("bank_id", account.getBank_id())
-                    .append("account_holder_name", account.getAccount_holder_name());
-            newDatabase.getCollection("accountHoldersInformation").insertOne(doc);
-        }else{
-            throw new CollectionOrDbNotFoundException(bankName + " not found");
-        }
+        newDatabase.createCollection("DebitService");
     }
 
     public void saveDebitCardEntry(String bankName, DebitCard debitCard) {
         boolean databaseExists = mongoClient.listDatabaseNames().into(new ArrayList<>()).contains(bankName);
         if(databaseExists){
             MongoDatabase newDatabase = mongoClient.getDatabase(bankName);
-//            newDatabase.getCollection("debitCardInformation").insertOne(new Document(debitCard.getCard_id(), debitCard));
             Document doc = new Document("card_id", debitCard.getCard_id())
                     .append("card_network", debitCard.getCard_network());
             newDatabase.getCollection("debitCardInformation").insertOne(doc);
@@ -64,6 +46,5 @@ public class MultiTenantService {
             throw new CollectionOrDbNotFoundException(bankName + " not found");
         }
     }
-
 
 }

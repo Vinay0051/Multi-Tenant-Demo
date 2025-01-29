@@ -9,13 +9,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DebitCard {
     @Id
     private String card_id;
+
+    private String cvv;
+
     @JsonProperty("card_network")
     private String card_network;
 
-    public DebitCard(String card_network) {
+    public DebitCard(String card_network, String cvv) {
         this.card_network = card_network;
+        this.cvv = cvv;
     }
 
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
+    }
     public String getCardNetwork() {
         return card_network;
     }
