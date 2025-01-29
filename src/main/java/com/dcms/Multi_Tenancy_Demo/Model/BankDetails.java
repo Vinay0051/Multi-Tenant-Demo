@@ -1,11 +1,10 @@
 package com.dcms.Multi_Tenancy_Demo.Model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "BankDetails")
 public class BankDetails {
-    @Id
+
     private String bankName;
     private String databaseName;
 
