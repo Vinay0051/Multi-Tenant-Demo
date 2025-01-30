@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/dcms")
 
@@ -33,6 +33,9 @@ public class MultiTenantController {
     @PostMapping("/onboard-tenant")
     public ResponseEntity<Map<String, String>> createDatabase(@RequestHeader("bankName") String bankName){
         try {
+            if (!bankName.equals(bankName.toUpperCase())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bank name must be in uppercase.");
+            }
             logger.info("Received request to create database for bank: {}", bankName);
             multiTenantService.createNewDatabase(bankName);
             Map<String, String> response =  new HashMap<>();
